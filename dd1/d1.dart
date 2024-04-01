@@ -11,7 +11,7 @@ double CalcularPerimetro(raio) {
 }
 
 void main() {
-  final raios = [5, 8, 12, 7.3, 18, 2, 25];
+  var raios = [5, 8, 12, 7.3, 18, 2, 25];
 
   for (var raio in raios) {
         print("Raio $raio, area: ${CalcularArea(raio).toStringAsFixed(2)}, "

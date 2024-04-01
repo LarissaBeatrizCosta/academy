@@ -34,3 +34,6 @@ void main() {
       "Numero de vogais: ${contarVogais(texto)} \n"
       "Numero de consoantes: ${contarConsoantes(texto)}");
 }
+
+// Tempo Gasto: 48:00,75
+

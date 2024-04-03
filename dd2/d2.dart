@@ -135,10 +135,25 @@ class FornecedorDeUltraCaloricos implements Fornecedor {
 class Pessoa {
   // Acumulador de calorias
   int _caloriasConsumidas = 0;
+  final _random = Random();
+
+  /// Gera o status de calorias com valor inicial aleatório
+  String gerarStatus() {
+    final status = <String>[
+      "deficit Extremo De Calorias",
+      "deficit De Calorias",
+      "pessoa EstaS atisfeita",
+      "excesso De Calorias"
+    ];
+
+    return status[_random.nextInt(status.length)];
+  }
 
   /// Imprime as informacoes desse consumidor
   void imprimirInformacoes() {
-    print('Calorias consumidas: $_caloriasConsumidas');
+    var status = gerarStatus();
+    print(
+        'Calorias iniciais: $status \nCalorias consumidas: $_caloriasConsumidas');
   }
 
   /// Consome um produto e aumenta o número de calorias

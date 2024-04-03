@@ -3,6 +3,7 @@ import 'dart:math';
 void main() {
   final _random = Random();
   final consumidor = Pessoa();
+  int contadorDeRefeicoes = 0;
 
   List<Fornecedor> fornecedores = [
     FornecedorDeBebidas(),
@@ -13,13 +14,13 @@ void main() {
     FornecedorDeUltraCaloricos()
   ];
 
-  
   // Consumindo produtos fornecidos
-  for (var i = 0; i < 5; i++) {
+  while (consumidor.precisaConsumirProduto()) {
     int fornecedor = _random.nextInt(fornecedores.length);
     consumidor.consumirProduto(fornecedores[fornecedor]);
+    contadorDeRefeicoes++;
   }
-
+  print("A quantidade de refeições foram: $contadorDeRefeicoes");
   consumidor.imprimirInformacoes();
 }
 
@@ -138,7 +139,6 @@ class Pessoa {
   int _caloriasConsumidas = 0;
   int statusCaloriasIniciais = Random().nextInt(2500);
 
-
   String gerarStatusDeCalorias() {
     if (statusCaloriasIniciais <= 500) {
       return "Deficit extremo de calorias.";
@@ -154,9 +154,9 @@ class Pessoa {
   /// Imprime as informações desse consumidor
   void imprimirInformacoes() {
     String statusCalorias = gerarStatusDeCalorias();
-    print('Calorias iniciais: $statusCaloriasIniciais\nClassificação de acordo com calorias iniciais: $statusCalorias\nCalorias consumidas: $_caloriasConsumidas');
+    print(
+        'Calorias iniciais: $statusCaloriasIniciais\nClassificação de acordo com calorias iniciais: $statusCalorias\nCalorias consumidas: $_caloriasConsumidas');
   }
-
 
   /// Consome um produto e aumenta o número de calorias
   void consumirProduto(Fornecedor fornecedor) {
@@ -164,5 +164,9 @@ class Pessoa {
     print('Consumindo ${produto.nome} (${produto.calorias} calorias)');
 
     _caloriasConsumidas += produto.calorias;
+  }
+
+  bool precisaConsumirProduto() {
+    return _caloriasConsumidas < 1800;
   }
 }

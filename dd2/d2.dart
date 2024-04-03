@@ -13,6 +13,7 @@ void main() {
     FornecedorDeUltraCaloricos()
   ];
 
+  
   // Consumindo produtos fornecidos
   for (var i = 0; i < 5; i++) {
     int fornecedor = _random.nextInt(fornecedores.length);
@@ -135,26 +136,27 @@ class FornecedorDeUltraCaloricos implements Fornecedor {
 class Pessoa {
   // Acumulador de calorias
   int _caloriasConsumidas = 0;
-  final _random = Random();
+  int statusCaloriasIniciais = Random().nextInt(2500);
 
-  /// Gera o status de calorias com valor inicial aleatório
-  String gerarStatus() {
-    final status = <String>[
-      "deficit Extremo De Calorias",
-      "deficit De Calorias",
-      "pessoa EstaS atisfeita",
-      "excesso De Calorias"
-    ];
 
-    return status[_random.nextInt(status.length)];
+  String gerarStatusDeCalorias() {
+    if (statusCaloriasIniciais <= 500) {
+      return "Deficit extremo de calorias.";
+    } else if (statusCaloriasIniciais <= 1800) {
+      return "Deficit de calorias.";
+    } else if (statusCaloriasIniciais <= 2500) {
+      return "Satisfeito";
+    } else {
+      return "Excesso de calorias.";
+    }
   }
 
-  /// Imprime as informacoes desse consumidor
+  /// Imprime as informações desse consumidor
   void imprimirInformacoes() {
-    var status = gerarStatus();
-    print(
-        'Calorias iniciais: $status \nCalorias consumidas: $_caloriasConsumidas');
+    String statusCalorias = gerarStatusDeCalorias();
+    print('Calorias iniciais: $statusCaloriasIniciais\nClassificação de acordo com calorias iniciais: $statusCalorias\nCalorias consumidas: $_caloriasConsumidas');
   }
+
 
   /// Consome um produto e aumenta o número de calorias
   void consumirProduto(Fornecedor fornecedor) {

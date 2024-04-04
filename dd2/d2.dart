@@ -3,6 +3,7 @@ import 'dart:math';
 void main() {
   final _random = Random();
   final consumidor = Pessoa();
+  // CONTADOR DO NÚMERO DE REFEIÇÕES
   int contadorDeRefeicoes = 0;
 
   List<Fornecedor> fornecedores = [
@@ -14,7 +15,8 @@ void main() {
     FornecedorDeUltraCaloricos()
   ];
 
-  // Consumindo produtos fornecidos
+  // Consumindo produtos fornecidos ALEATÓRIAMENTE
+
   while (consumidor.precisaConsumirProduto()) {
     int fornecedor = _random.nextInt(fornecedores.length);
     consumidor.consumirProduto(fornecedores[fornecedor]);
@@ -56,6 +58,8 @@ class FornecedorDeBebidas implements Fornecedor {
   }
 }
 
+//NOVOS FORNECEDORES
+
 class FornecedorDeSanduiches implements Fornecedor {
   final _random = Random();
   final _sanduichesDisponiveis = <Produto>[
@@ -74,6 +78,8 @@ class FornecedorDeSanduiches implements Fornecedor {
   }
 }
 
+//NOVOS FORNECEDORES
+
 class FornecedorDeBolos implements Fornecedor {
   final _random = Random();
   final _bolosDisponiveis = <Produto>[
@@ -91,6 +97,8 @@ class FornecedorDeBolos implements Fornecedor {
   }
 }
 
+//NOVOS FORNECEDORES
+
 class FornecedorDeSaladas implements Fornecedor {
   final _random = Random();
   final _saladasDisponiveis = <Produto>[
@@ -105,6 +113,8 @@ class FornecedorDeSaladas implements Fornecedor {
   }
 }
 
+//NOVOS FORNECEDORES
+
 class FornecedorDePetiscos implements Fornecedor {
   final _random = Random();
   final _petiscosDisponiveis = <Produto>[
@@ -118,6 +128,8 @@ class FornecedorDePetiscos implements Fornecedor {
     return _petiscosDisponiveis[_random.nextInt(_petiscosDisponiveis.length)];
   }
 }
+
+//NOVOS FORNECEDORES
 
 class FornecedorDeUltraCaloricos implements Fornecedor {
   final _random = Random();
@@ -137,8 +149,10 @@ class FornecedorDeUltraCaloricos implements Fornecedor {
 class Pessoa {
   // Acumulador de calorias
   int _caloriasConsumidas = 0;
+  // NIVEL INICIAL ALEATÓRIO
   int statusCaloriasIniciais = Random().nextInt(2500);
 
+  // STATUS DE CALORIAS
   String gerarStatusDeCalorias() {
     if (statusCaloriasIniciais <= 500) {
       return "Deficit extremo de calorias.";
@@ -166,6 +180,7 @@ class Pessoa {
     _caloriasConsumidas += produto.calorias;
   }
 
+  // OBSERVA SE NECESSITA COMER
   bool precisaConsumirProduto() {
     return _caloriasConsumidas < 1800;
   }

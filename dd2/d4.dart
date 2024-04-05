@@ -10,6 +10,12 @@ void main() {
   final retanguloB = Retangulo('Retângulo B', 19, 11);
   final quadradoA = Quadrado('Quadrado A', 4);
   final quadradoB = Quadrado('Quadrado B', 20);
+  final trianguloEquilateroA = TrianguloEquilatero('Triângulo Equilátero A', 5);
+  final trianguloEquilateroB = TrianguloEquilatero('Triângulo Equilátero B', 10);
+  final pentagonoRegularA = PentagonoRegular('Pentágono Regular A', 6, 10);
+  final pentagonoRegularB = PentagonoRegular('Pentágono Regular B', 8, 12);
+  final hexagonoRegularA = HexagonoRegular('Hexágono Regular A', 7, 9);
+  final hexagonoRegularB = HexagonoRegular('Hexágono Regular B', 10, 14);
 
   // Comparando áreas dos círculos
   double areaCirculoA = circuloA.calcularArea();
@@ -25,6 +31,24 @@ void main() {
   double areaQuadradoA = quadradoA.calcularArea();
   double areaQuadradoB = quadradoB.calcularArea();
   CalcularMaiorArea(quadradoA, areaQuadradoA, quadradoB, areaQuadradoB);
+
+  // Comparando áreas dos triângulos equiláteros
+  double areaTrianguloEquilateroA = trianguloEquilateroA.calcularArea();
+  double areaTrianguloEquilateroB = trianguloEquilateroB.calcularArea();
+  CalcularMaiorArea(trianguloEquilateroA, areaTrianguloEquilateroA,
+      trianguloEquilateroB, areaTrianguloEquilateroB);
+
+  // Comparando áreas dos pentágonos regulares
+  double areaPentagonoRegularA = pentagonoRegularA.calcularArea();
+  double areaPentagonoRegularB = pentagonoRegularB.calcularArea();
+  CalcularMaiorArea(pentagonoRegularA, areaPentagonoRegularA, pentagonoRegularB,
+      areaPentagonoRegularB);
+
+  // Comparando áreas dos hexágonos regulares
+  double areaHexagonoRegularA = hexagonoRegularA.calcularArea();
+  double areaHexagonoRegularB = hexagonoRegularB.calcularArea();
+  CalcularMaiorArea(hexagonoRegularA, areaHexagonoRegularA, hexagonoRegularB,
+      areaHexagonoRegularB);
 }
 
 abstract class FormaGeometrica {
@@ -33,7 +57,8 @@ abstract class FormaGeometrica {
   FormaGeometrica(this.nome);
 }
 
-void CalcularMaiorArea(FormaGeometrica forma1, double area1, FormaGeometrica forma2, double area2) {
+void CalcularMaiorArea(FormaGeometrica forma1, double area1,
+    FormaGeometrica forma2, double area2) {
   if (area1 > area2)
     print("A ${forma1.nome} é maior em área com: ${area1.toStringAsFixed(2)} ");
   else
@@ -112,6 +137,73 @@ class Quadrado extends FormaGeometrica implements ComparadorFormasGeometricas {
   double calcularPerimetro() {
     /// Retorna a perimetro desse quadrado
     double perimetro = lado * 4;
+    return perimetro;
+  }
+}
+
+/// Representa a forma geométrica "triângulo equilátero"
+class TrianguloEquilatero extends FormaGeometrica
+    implements ComparadorFormasGeometricas {
+  final double lado;
+
+  TrianguloEquilatero(String nome, this.lado) : super(nome);
+
+  @override
+  double calcularArea() {
+    /// Retorna a área desse triângulo equilátero
+    double area = (math.sqrt(3) / 4) * math.pow(lado, 2);
+    return area;
+  }
+
+  @override
+  double calcularPerimetro() {
+    /// Retorna o perímetro desse triângulo equilátero
+    double perimetro = lado * 3;
+    return perimetro;
+  }
+}
+
+/// Representa a forma geométrica "pentágono regular"
+class PentagonoRegular extends FormaGeometrica
+    implements ComparadorFormasGeometricas {
+  final double lado;
+  final double apotema;
+
+  PentagonoRegular(String nome, this.lado, this.apotema) : super(nome);
+
+  @override
+  double calcularArea() {
+    /// Retorna a área desse pentágono regular
+    double area = (5 / 2) * lado * apotema;
+    return area;
+  }
+
+  @override
+  double calcularPerimetro() {
+    /// Retorna o perímetro desse pentágono regular
+    double perimetro = lado * 5;
+    return perimetro;
+  }
+}
+
+/// Representa a forma geométrica "hexágono regular"
+class HexagonoRegular extends FormaGeometrica implements ComparadorFormasGeometricas {
+  final double lado;
+  final double apotema;
+
+  HexagonoRegular(String nome, this.lado, this.apotema) : super(nome);
+
+  @override
+  double calcularArea() {
+    /// Retorna a área desse hexágono regular
+    double area = (3 * math.sqrt(3) * math.pow(lado, 2)) / 2;
+    return area;
+  }
+
+  @override
+  double calcularPerimetro() {
+    /// Retorna o perímetro desse hexágono regular
+    double perimetro = lado * 6;
     return perimetro;
   }
 }

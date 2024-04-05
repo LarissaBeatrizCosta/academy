@@ -207,3 +207,5 @@ class HexagonoRegular extends FormaGeometrica implements ComparadorFormasGeometr
     return perimetro;
   }
 }
+
+// TEMPO GASTO: 2HRS E 28MIN;

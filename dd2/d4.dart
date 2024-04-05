@@ -8,13 +8,23 @@ void main() {
   final circuloB = Circulo('Circulo B', 8);
   final retanguloA = Retangulo('Retângulo A', 4, 3);
   final retanguloB = Retangulo('Retângulo B', 19, 11);
-  final quadradoA = Quadrado('Quadrado', 4);
-  final quadradoB = Quadrado('Quadrado', 20);
+  final quadradoA = Quadrado('Quadrado A', 4);
+  final quadradoB = Quadrado('Quadrado B', 20);
 
   // Comparando áreas dos círculos
   double areaCirculoA = circuloA.calcularArea();
   double areaCirculoB = circuloB.calcularArea();
-  CalcularMaiorAreaCirculo(circuloA, areaCirculoA, circuloB, areaCirculoB);
+  CalcularMaiorArea(circuloA, areaCirculoA, circuloB, areaCirculoB);
+
+  // Comparando áreas dos retângulos
+  double areaRetanguloA = retanguloA.calcularArea();
+  double areaRetanguloB = retanguloB.calcularArea();
+  CalcularMaiorArea(retanguloA, areaRetanguloA, retanguloB, areaRetanguloB);
+
+  // Comparando áreas dos quadrados
+  double areaQuadradoA = quadradoA.calcularArea();
+  double areaQuadradoB = quadradoB.calcularArea();
+  CalcularMaiorArea(quadradoA, areaQuadradoA, quadradoB, areaQuadradoB);
 }
 
 abstract class FormaGeometrica {
@@ -23,12 +33,11 @@ abstract class FormaGeometrica {
   FormaGeometrica(this.nome);
 }
 
-void CalcularMaiorAreaCirculo(
-    Circulo circulo1, double area1, Circulo circulo2, double area2) {
+void CalcularMaiorArea(FormaGeometrica forma1, double area1, FormaGeometrica forma2, double area2) {
   if (area1 > area2)
-    print("O círculo ${circulo1.nome} é maior em area com: ${area1.toStringAsFixed(2)} ");
+    print("A ${forma1.nome} é maior em área com: ${area1.toStringAsFixed(2)} ");
   else
-    print("O círculo ${circulo2.nome} é maior em area com: ${area2.toStringAsFixed(2)} ");
+    print("A ${forma2.nome} é maior em área com: ${area2.toStringAsFixed(2)} ");
 }
 
 abstract class ComparadorFormasGeometricas {

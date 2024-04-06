@@ -7,14 +7,14 @@ class CartaA {
   CartaA(this.naipe, this.valor);
 }
 
-void empilharCarta(Map<int, CartaA> baralho, CartaA carta) {
-  baralho[baralho.length] = carta;
-  print(" A carta adicionada foi: ${carta.naipe}");
+void empilharCarta(Queue<CartaA> baralho, CartaA carta) {
+  baralho.add(carta);
+  print("A carta adicionada foi: ${carta.naipe}");
 }
 
-void removerCarta(Map<int, CartaA> baralho) {
+void removerCarta(Queue<CartaA> baralho) {
   if (baralho.isNotEmpty) {
-    var cartaRemovida = baralho.remove(baralho.length - 1);
+    var cartaRemovida = baralho.removeLast();
     if (cartaRemovida != null) {
       print("A carta ${cartaRemovida.naipe} foi removida");
     }
@@ -22,7 +22,7 @@ void removerCarta(Map<int, CartaA> baralho) {
 }
 
 void main() {
-  var baralho = <int, CartaA>{};
+  var baralho = Queue<CartaA>();
   empilharCarta(baralho, CartaA('\u2663', "A"));
   empilharCarta(baralho, CartaA('\u2665', "A"));
   empilharCarta(baralho, CartaA('\u2660', "A"));

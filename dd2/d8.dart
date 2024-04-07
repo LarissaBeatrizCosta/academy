@@ -8,17 +8,17 @@ class Figura {
 }
 
 class PacoteDeFiguras {
-  final List<Figura> pacoteDeFiguras = [];
-
   /// Gera lista aleatória com 4 figuras
-  void gerarLista(List<Figura> listaDeFigurasDisponiveis) {
-    while (pacoteDeFiguras.length != 4) {
+  List<Figura> gerarLista(List<Figura> listaDeFigurasDisponiveis) {
+    List<Figura> pacoteDeFiguras = [];
+    while (pacoteDeFiguras.length < 4) {
       final figuraAleatoria = listaDeFigurasDisponiveis[
           Random().nextInt(listaDeFigurasDisponiveis.length)];
       if (!pacoteDeFiguras.contains(figuraAleatoria)) {
         pacoteDeFiguras.add(figuraAleatoria);
       }
     }
+    return pacoteDeFiguras;
   }
 }
 
@@ -37,9 +37,11 @@ class Album {
   }
 
   void imprimirFigurasColadas() {
-    List<Figura> listaOrdenada = figurasColadas;
-    listaOrdenada.sort();
-    for (var figura in listaOrdenada) {
+    List<Figura> novaLista = List.from(figurasColadas);
+
+    novaLista.sort((a, b) => a.codigo.compareTo(b.codigo));
+
+    for (var figura in novaLista) {
       print("${figura.codigo}: ${figura.nome}");
     }
   }
@@ -69,13 +71,14 @@ void main() {
     Figura('Figura 20', 20),
   ];
 
-  final pacote = PacoteDeFiguras();
+  final pacoteDeFiguras = PacoteDeFiguras();
   final album = Album();
 
-
-
+  while (album.figurasColadas.length < listaDeFiguras.length) {
+    final pacote = pacoteDeFiguras.gerarLista(listaDeFiguras);
+    album.adicionarFiguras(pacote);
+  }
 
   print('Número de figuras repetidas: ${album.figurasRepetidas.length}');
   album.imprimirFigurasColadas();
-
 }

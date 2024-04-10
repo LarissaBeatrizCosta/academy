@@ -6,7 +6,7 @@ for (var doc in docs){
 }
 
 void main () async{
-  List<String> documentos= ["teste.1", "teste.2", "teste.3","teste.4"];
+  List<String> documentos= ["ap1.dart.1", "ap1.dart.2", "ap1.dart.3","ap1.dart.4"];
   print("Iniciando busca");
   await buscar(documentos);
   print("Busca Finalizada");

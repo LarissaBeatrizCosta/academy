@@ -37,10 +37,9 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: TextButton(
             onPressed: () {
-              print("Sortear cor");
               sortearCor();
             },
-            child: Text('Meu Botão', style: TextStyle(color: Colors.black)),
+            child: Text('Sortear Cor', style: TextStyle(color: Colors.black)),
           ),
         ),
       ),

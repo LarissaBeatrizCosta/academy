@@ -26,25 +26,33 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Color corDoFundo = Colors.white;
+  int botaoCorreto = 0;
+  int numeroDeTentativas = 2;
+  bool perdeu = false;
 
   @override
   Widget build(BuildContext context) {
+    if (perdeu) {
+      return Container(
+        color: Colors.red,
+        child: const Text('Você perdeu', style: TextStyle(color: Colors.white),),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink,
         title: Text(
           widget.title,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: Center(
         child: ElevatedButton(
           key: const Key("1"),
           onPressed: () {
-            verificarBotaoCorreto(const Key("1"));
+            verificarBotaoCorreto(1);
           },
-          child: Text("1", style: TextStyle(color: Colors.black),
-          ),
+          child: const Text("1", style: TextStyle(color: Colors.black)),
         ),
       ),
       backgroundColor: corDoFundo,
@@ -52,22 +60,23 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   int escolherBotao() {
-    int botaoCorreto = Random().nextInt(3)+1;
-    return botaoCorreto;
+    return Random().nextInt(3) + 1;
   }
 
-  void verificarBotaoCorreto(Key botaoEscolhido) {
-    int numeroDeTentaivas = 2;
-    int botaoCorreto = escolherBotao();
-    print(botaoCorreto);
+  void verificarBotaoCorreto(int botaoEscolhido) {
+    if (numeroDeTentativas > 0) {
+      botaoCorreto = escolherBotao();
+      print(botaoCorreto);
 
-    while (numeroDeTentaivas > 0) {
       setState(() {
-        if (botaoCorreto == int.parse(botaoEscolhido.toString())) {
+        if (botaoCorreto == botaoEscolhido) {
           corDoFundo = Colors.green;
         } else {
           print("Tente Novamente");
-          numeroDeTentaivas--;
+          numeroDeTentativas--;
+          if (numeroDeTentativas == 0){
+            perdeu = true;
+          }
         }
       });
     }

@@ -35,7 +35,10 @@ class _MyHomePageState extends State<MyHomePage> {
     if (perdeu) {
       return Container(
         color: Colors.red,
-        child: const Text('Você perdeu', style: TextStyle(color: Colors.white),),
+        child: const Text(
+          'Você perdeu',
+          style: TextStyle(color: Colors.white),
+        ),
       );
     }
     return Scaffold(
@@ -46,15 +49,37 @@ class _MyHomePageState extends State<MyHomePage> {
           style: const TextStyle(color: Colors.white),
         ),
       ),
-      body: Center(
-        child: ElevatedButton(
-          key: const Key("1"),
-          onPressed: () {
-            verificarBotaoCorreto(1);
-          },
-          child: const Text("1", style: TextStyle(color: Colors.black)),
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+        Center(
+          child: ElevatedButton(
+            key: const Key("1"),
+            onPressed: () {
+              verificarBotaoCorreto(1);
+            },
+            child: const Text("1", style: TextStyle(color: Colors.black)),
+          ),
         ),
-      ),
+        Center(
+          child: ElevatedButton(
+            key: const Key("2"),
+            onPressed: () {
+              verificarBotaoCorreto(2);
+            },
+            child: const Text("2", style: TextStyle(color: Colors.black)),
+          ),
+        ),
+        Center(
+          child: ElevatedButton(
+            key: const Key("3"),
+            onPressed: () {
+              verificarBotaoCorreto(3);
+            },
+            child: const Text("3", style: TextStyle(color: Colors.black)),
+          ),
+        ),
+      ]),
       backgroundColor: corDoFundo,
     );
   }
@@ -74,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         } else {
           print("Tente Novamente");
           numeroDeTentativas--;
-          if (numeroDeTentativas == 0){
+          if (numeroDeTentativas == 0) {
             perdeu = true;
           }
         }

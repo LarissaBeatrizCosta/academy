@@ -106,7 +106,6 @@ class _MyWidgetState extends State<MyWidget> {
 
   Widget ganhouJogo() {
     return Container(
-      color: Colors.green,
       child: Column(
         children: [
           Text('Você ganhou!!!'),

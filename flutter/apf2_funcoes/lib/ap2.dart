@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const MyHomePage(title: "Exercício 1"));
+    return MaterialApp(home: const MyHomePage(title: "Exercício 2"));
   }
 }
 

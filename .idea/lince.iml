@@ -15,6 +15,9 @@
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf2_funcoes/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf2_funcoes/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf2_funcoes/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf3_funcoes/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf3_funcoes/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf3_funcoes/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

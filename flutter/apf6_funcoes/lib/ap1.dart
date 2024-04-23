@@ -86,26 +86,62 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: darkBlue,
       ),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: MyWidget(),
+      home: TelaInicial(),
+    );
+  }
+}
+
+class TelaInicial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Tela Inicial"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                print("mudar pagina");
+              },
+              child: Text("Lista de Pessoas"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print("ADD ROTA");
+              },
+              child: Text("Adicionar Pessoa"),
+            )
+          ],
         ),
       ),
     );
   }
 }
 
-class MyWidget extends StatefulWidget {
-  @override
-  State<MyWidget> createState() => _MyWidgetState();
-}
-
-class _MyWidgetState extends State<MyWidget> {
+class TelaListaDePessoas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Hello, World!',
-      style: Theme.of(context).textTheme.headlineMedium,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Lista de Pessoas"),
+      ),
+      body: Consumer<EstadoListaDePessoas>(
+        builder: (context, estadoLista, _) {
+          return ListView.builder(
+            itemCount: estadoLista.pessoas.length,
+            itemBuilder: (context, index) {
+              final pessoa = estadoLista.pessoas[index];
+              return ListTile(
+                title: Text(pessoa.nome),
+                subtitle: Text(pessoa.email),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

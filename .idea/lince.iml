@@ -21,6 +21,12 @@
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf4_funcoes/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf4_funcoes/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf4_funcoes/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf5_funcoes/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf5_funcoes/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf5_funcoes/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf6_funcoes/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf6_funcoes/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/apf6_funcoes/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

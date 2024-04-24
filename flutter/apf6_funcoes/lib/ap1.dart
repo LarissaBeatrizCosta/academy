@@ -61,7 +61,22 @@ class Pessoa {
 }
 
 class EstadoListaDePessoas with ChangeNotifier {
-  final _listaDePessoas = <Pessoa>[];
+  final _listaDePessoas = <Pessoa>[
+    Pessoa(
+      nome: "João",
+      email: "joao@example.com",
+      telefone: "123456789",
+      github: "joao",
+      tipoSanguineo: TipoSanguineo.aPositivo,
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "123456789",
+      github: "branda",
+      tipoSanguineo: TipoSanguineo.abPositivo,
+    ),
+  ];
 
   List<Pessoa> get pessoas => List.unmodifiable(_listaDePessoas);
 
@@ -86,7 +101,12 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: darkBlue,
       ),
       debugShowCheckedModeBanner: false,
-      home: TelaInicial(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => TelaInicial(),
+        "/listaDePessoas": (context) => TelaListaDePessoas(),
+        // "/TelaDeDetalhes": (context) => TelaDetalhes(),
+      },
     );
   }
 }
@@ -103,9 +123,7 @@ class TelaInicial extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                print("mudar pagina");
-              },
+              onPressed: () => Navigator.pushNamed(context, "/listaDePessoas"),
               child: Text("Lista de Pessoas"),
             ),
             ElevatedButton(
@@ -137,10 +155,52 @@ class TelaListaDePessoas extends StatelessWidget {
               return ListTile(
                 title: Text(pessoa.nome),
                 subtitle: Text(pessoa.email),
+                trailing: CircleAvatar(
+                  backgroundColor: escolherCor(pessoa.tipoSanguineo),
+                ),
+                onTap: () => Navigator.pushNamed(context, "/TelaDeDetalhes",
+                    arguments: pessoa),
               );
             },
           );
         },
+      ),
+    );
+  }
+}
+
+Color escolherCor(TipoSanguineo tipo) {
+  switch (tipo) {
+    case TipoSanguineo.aPositivo:
+      return Colors.blue;
+    case TipoSanguineo.aNegativo:
+      return Colors.red;
+    case TipoSanguineo.bPositivo:
+      return Colors.purple;
+    case TipoSanguineo.bNegativo:
+      return Colors.orange;
+    case TipoSanguineo.oPositivo:
+      return Colors.green;
+    case TipoSanguineo.oNegativo:
+      return Colors.yellow;
+    case TipoSanguineo.abPositivo:
+      return Colors.cyan;
+    case TipoSanguineo.abNegativo:
+      return Colors.white;
+  }
+}
+
+// class TelaDetalhes extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {}
+// }
+
+class TelaAdicionarPessoas extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Adicionar Pessoas"),
       ),
     );
   }

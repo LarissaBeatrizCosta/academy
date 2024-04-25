@@ -38,7 +38,7 @@ class Pessoa {
   final String github;
   final TipoSanguineo tipoSanguineo;
 
-// todo: implementar equals e hashcode
+// equals e hashcode
 
   @override
   bool operator ==(Object other) {
@@ -62,13 +62,6 @@ class Pessoa {
 
 class EstadoListaDePessoas with ChangeNotifier {
   final _listaDePessoas = <Pessoa>[
-    Pessoa(
-      nome: "João",
-      email: "joao@example.com",
-      telefone: "123456789",
-      github: "joao",
-      tipoSanguineo: TipoSanguineo.aPositivo,
-    ),
     Pessoa(
       nome: "Brenda",
       email: "brenda@example.com",
@@ -106,6 +99,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => TelaInicial(),
         "/listaDePessoas": (context) => TelaListaDePessoas(),
         // "/TelaDeDetalhes": (context) => TelaDetalhes(),
+        "/adicionarPessoas": (context) => TelaAdicionarPessoas(),
       },
     );
   }
@@ -127,9 +121,8 @@ class TelaInicial extends StatelessWidget {
               child: Text("Lista de Pessoas"),
             ),
             ElevatedButton(
-              onPressed: () {
-                print("ADD ROTA");
-              },
+              onPressed: () =>
+                  Navigator.pushNamed(context, "/adicionarPessoas"),
               child: Text("Adicionar Pessoa"),
             )
           ],
@@ -196,12 +189,73 @@ Color escolherCor(TipoSanguineo tipo) {
 // }
 
 class TelaAdicionarPessoas extends StatelessWidget {
+  bool _validate = false;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _telefoneController = TextEditingController();
+  final TextEditingController _githubController = TextEditingController();
+  final TextEditingController _tipoSanguineoController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Adicionar Pessoas"),
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Adicionar Pessoas"),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: _nomeController,
+                  decoration: InputDecoration(hintText: "Nome Completo"),
+                  maxLength: 40,
+                  validator: _validarNome,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(hintText: "Email"),
+                  maxLength: 40,
+                  validator: _validarEmail,
+                ),
+                ElevatedButton(
+                  onPressed: () => print("IMPLEMENTAR"),
+                  child: Text('Enviar'),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
+
+String? _validarNome(String? nome) {
+  if (nome == null || nome.isEmpty) {
+    return "Por favor informe seu nome";
+  } else
+    return null;
+}
+
+String? _validarEmail(String? email) {
+  if (email == null || email.isEmpty) {
+    return "Por favor preencha seu email";
+  } else if (!email.contains("@")) {
+    return "Email inválido";
+  } else
+    return null;
+}
+
+// _sendForm(BuildContext context){
+//   if (_formKey.currentState!.validate()){
+//     final novaPessoa = Pessoa(
+//         nome: _nomeController
+//     )
+//   }
+// }
+
+// todo: mudar para fora do MyApp
+

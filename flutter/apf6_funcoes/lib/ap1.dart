@@ -7,7 +7,14 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => EstadoListaDePessoas(),
-      child: MyApp(),
+      child: MaterialApp(
+        initialRoute: "/",
+        routes: {
+          "/": (context) => TelaInicial(),
+          "/listaDePessoas": (context) => TelaListaDePessoas(),
+          "/adicionarPessoas": (context) => TelaAdicionarPessoas(),
+        },
+      ),
     ),
   );
 }
@@ -27,16 +34,16 @@ class Pessoa {
   const Pessoa({
     required this.nome,
     required this.email,
-    required this.telefone,
-    required this.github,
-    required this.tipoSanguineo,
+    // required this.telefone,
+    // required this.github,
+    // required this.tipoSanguineo,
   });
 
   final String nome;
   final String email;
-  final String telefone;
-  final String github;
-  final TipoSanguineo tipoSanguineo;
+  // final String telefone;
+  // final String github;
+  // final TipoSanguineo tipoSanguineo;
 
 // equals e hashcode
 
@@ -45,19 +52,19 @@ class Pessoa {
     if (identical(this, other)) return true;
     if (other is! Pessoa) return false;
     return nome == other.nome &&
-        email == other.email &&
-        telefone == other.telefone &&
-        github == other.github &&
-        tipoSanguineo == other.tipoSanguineo;
+        email == other.email ;
+        // && telefone == other.telefone &&
+        // github == other.github &&
+        // tipoSanguineo == other.tipoSanguineo;
   }
 
   @override
   int get hashCode =>
       nome.hashCode ^
-      email.hashCode ^
-      telefone.hashCode ^
-      github.hashCode ^
-      tipoSanguineo.hashCode;
+      email.hashCode;
+      // ^ telefone.hashCode ^
+      // github.hashCode ^
+      // tipoSanguineo.hashCode;
 }
 
 class EstadoListaDePessoas with ChangeNotifier {
@@ -65,9 +72,6 @@ class EstadoListaDePessoas with ChangeNotifier {
     Pessoa(
       nome: "Brenda",
       email: "brenda@example.com",
-      telefone: "123456789",
-      github: "branda",
-      tipoSanguineo: TipoSanguineo.abPositivo,
     ),
   ];
 
@@ -84,25 +88,6 @@ class EstadoListaDePessoas with ChangeNotifier {
   }
 
 // todo: implementar métodos restantes
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: darkBlue,
-      ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/",
-      routes: {
-        "/": (context) => TelaInicial(),
-        "/listaDePessoas": (context) => TelaListaDePessoas(),
-        // "/TelaDeDetalhes": (context) => TelaDetalhes(),
-        "/adicionarPessoas": (context) => TelaAdicionarPessoas(),
-      },
-    );
-  }
 }
 
 class TelaInicial extends StatelessWidget {
@@ -141,18 +126,18 @@ class TelaListaDePessoas extends StatelessWidget {
       ),
       body: Consumer<EstadoListaDePessoas>(
         builder: (context, estadoLista, _) {
+          final pessoas = estadoLista.pessoas;
           return ListView.builder(
-            itemCount: estadoLista.pessoas.length,
+            itemCount: pessoas.length,
             itemBuilder: (context, index) {
-              final pessoa = estadoLista.pessoas[index];
+              final pessoa = pessoas[index];
               return ListTile(
                 title: Text(pessoa.nome),
                 subtitle: Text(pessoa.email),
                 trailing: CircleAvatar(
-                  backgroundColor: escolherCor(pessoa.tipoSanguineo),
+                  // backgroundColor: escolherCor(pessoa.tipoSanguineo),
                 ),
-                onTap: () => Navigator.pushNamed(context, "/TelaDeDetalhes",
-                    arguments: pessoa),
+                onTap: () => print("IMPLEMENTAR"),
               );
             },
           );
@@ -183,20 +168,13 @@ Color escolherCor(TipoSanguineo tipo) {
   }
 }
 
-// class TelaDetalhes extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {}
-// }
-
 class TelaAdicionarPessoas extends StatelessWidget {
-  bool _validate = false;
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nomeController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telefoneController = TextEditingController();
-  final TextEditingController _githubController = TextEditingController();
-  final TextEditingController _tipoSanguineoController =
-      TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController nomeController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  // final TextEditingController telefoneController = TextEditingController();
+  // final TextEditingController githubController = TextEditingController();
+  // final TextEditingController tipoSanguineoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -211,19 +189,19 @@ class TelaAdicionarPessoas extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  controller: _nomeController,
+                  controller: nomeController,
                   decoration: InputDecoration(hintText: "Nome Completo"),
                   maxLength: 40,
                   validator: _validarNome,
                 ),
                 TextFormField(
-                  controller: _emailController,
+                  controller: emailController,
                   decoration: InputDecoration(hintText: "Email"),
                   maxLength: 40,
                   validator: _validarEmail,
                 ),
                 ElevatedButton(
-                  onPressed: () => print("IMPLEMENTAR"),
+                  onPressed: () => _sendForm(context),
                   child: Text('Enviar'),
                 ),
               ],
@@ -231,31 +209,68 @@ class TelaAdicionarPessoas extends StatelessWidget {
           ),
         ));
   }
+
+  String? _validarNome(String? nome) {
+    if (nome == null || nome.isEmpty) {
+      return "Por favor informe seu nome";
+    } else
+      return null;
+  }
+
+  String? _validarEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return "Por favor preencha seu email";
+    } else if (!email.contains("@")) {
+      return "Email inválido";
+    } else
+      return null;
+  }
+
+  TipoSanguineo parseTipoSanguineo(String sangue) {
+    switch (sangue.toLowerCase()) {
+      case "apositivo":
+        return TipoSanguineo.aPositivo;
+      case "anegativo":
+        return TipoSanguineo.aNegativo;
+      case "bpositivo":
+        return TipoSanguineo.bPositivo;
+      case "bnegativo":
+        return TipoSanguineo.bNegativo;
+      case "opositivo":
+        return TipoSanguineo.oPositivo;
+      case "onegativo":
+        return TipoSanguineo.oNegativo;
+      case "abpositivo":
+        return TipoSanguineo.abPositivo;
+      case "abnegativo":
+        return TipoSanguineo.abNegativo;
+      default:
+        return throw ArgumentError("Inválido");
+    }
+  }
+
+  _sendForm(BuildContext context) {
+    // TipoSanguineo tipoDeSangue =
+    //     parseTipoSanguineo(tipoSanguineoController.text);
+    if (_formKey.currentState!.validate()) {
+      final novaPessoa = Pessoa(
+        nome: nomeController.text,
+        email: emailController.text,
+        // telefone: telefoneController.text,
+        // github: githubController.text,
+        // tipoSanguineo: tipoDeSangue,
+      );
+      Provider.of<EstadoListaDePessoas>(context, listen: false)
+          .incluir(novaPessoa);
+      _limparCampos();
+    }
+  }
+
+  void _limparCampos() {
+    nomeController.clear();
+    emailController.clear();
+    // telefoneController.clear();
+    // githubController.clear();
+    // tipoSanguineoController.clear();
+  }
 }
-
-String? _validarNome(String? nome) {
-  if (nome == null || nome.isEmpty) {
-    return "Por favor informe seu nome";
-  } else
-    return null;
-}
-
-String? _validarEmail(String? email) {
-  if (email == null || email.isEmpty) {
-    return "Por favor preencha seu email";
-  } else if (!email.contains("@")) {
-    return "Email inválido";
-  } else
-    return null;
-}
-
-// _sendForm(BuildContext context){
-//   if (_formKey.currentState!.validate()){
-//     final novaPessoa = Pessoa(
-//         nome: _nomeController
-//     )
-//   }
-// }
-
-// todo: mudar para fora do MyApp
-

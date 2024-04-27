@@ -34,16 +34,18 @@ class Pessoa {
   const Pessoa({
     required this.nome,
     required this.email,
-    // required this.telefone,
-    // required this.github,
-    // required this.tipoSanguineo,
+    required this.telefone,
+    required this.github,
+    required this.tipoSanguineo,
   });
 
   final String nome;
   final String email;
-  // final String telefone;
-  // final String github;
-  // final TipoSanguineo tipoSanguineo;
+
+  final String telefone;
+
+  final String github;
+  final TipoSanguineo tipoSanguineo;
 
 // equals e hashcode
 
@@ -52,19 +54,19 @@ class Pessoa {
     if (identical(this, other)) return true;
     if (other is! Pessoa) return false;
     return nome == other.nome &&
-        email == other.email ;
-        // && telefone == other.telefone &&
-        // github == other.github &&
-        // tipoSanguineo == other.tipoSanguineo;
+        email == other.email &&
+        telefone == other.telefone &&
+        github == other.github &&
+        tipoSanguineo == other.tipoSanguineo;
   }
 
   @override
   int get hashCode =>
       nome.hashCode ^
-      email.hashCode;
-      // ^ telefone.hashCode ^
-      // github.hashCode ^
-      // tipoSanguineo.hashCode;
+      email.hashCode ^
+      telefone.hashCode ^
+      github.hashCode ^
+      tipoSanguineo.hashCode;
 }
 
 class EstadoListaDePessoas with ChangeNotifier {
@@ -72,6 +74,9 @@ class EstadoListaDePessoas with ChangeNotifier {
     Pessoa(
       nome: "Brenda",
       email: "brenda@example.com",
+      telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.abPositivo,
+      github: "meuGit",
     ),
   ];
 
@@ -133,9 +138,16 @@ class TelaListaDePessoas extends StatelessWidget {
               final pessoa = pessoas[index];
               return ListTile(
                 title: Text(pessoa.nome),
-                subtitle: Text(pessoa.email),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(pessoa.email),
+                    Text(pessoa.telefone),
+                    Text(pessoa.github),
+                  ],
+                ),
                 trailing: CircleAvatar(
-                  // backgroundColor: escolherCor(pessoa.tipoSanguineo),
+                  backgroundColor: escolherCor(pessoa.tipoSanguineo),
                 ),
                 onTap: () => print("IMPLEMENTAR"),
               );
@@ -172,9 +184,9 @@ class TelaAdicionarPessoas extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nomeController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  // final TextEditingController telefoneController = TextEditingController();
-  // final TextEditingController githubController = TextEditingController();
-  // final TextEditingController tipoSanguineoController = TextEditingController();
+  final TextEditingController telefoneController = TextEditingController();
+  final TextEditingController githubController = TextEditingController();
+  final TextEditingController tipoSanguineoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -200,6 +212,25 @@ class TelaAdicionarPessoas extends StatelessWidget {
                   maxLength: 40,
                   validator: _validarEmail,
                 ),
+                TextFormField(
+                  controller: telefoneController,
+                  decoration: InputDecoration(hintText: "Telefone"),
+                  maxLength: 40,
+                  validator: _validarTelefone,
+                ),
+                TextFormField(
+                  controller: githubController,
+                  decoration: InputDecoration(hintText: "GitHub"),
+                  maxLength: 40,
+                  validator: _validarGitHub,
+                ),
+                TextFormField(
+                  controller: tipoSanguineoController,
+                  decoration: InputDecoration(
+                      hintText: "Tipo Sanguíneo (aPositivo...)"),
+                  maxLength: 40,
+                  validator: _validarTipoSanguineo,
+                ),
                 ElevatedButton(
                   onPressed: () => _sendForm(context),
                   child: Text('Enviar'),
@@ -222,6 +253,29 @@ class TelaAdicionarPessoas extends StatelessWidget {
       return "Por favor preencha seu email";
     } else if (!email.contains("@")) {
       return "Email inválido";
+    } else
+      return null;
+  }
+
+  String? _validarTelefone(String? telefone) {
+    if (telefone == null || telefone.isEmpty) {
+      return "Por favor preencha seu telefone";
+    } else if (telefone.length < 10) {
+      return "Número inválido (9 dígitos)";
+    } else
+      return null;
+  }
+
+  String? _validarGitHub(String? gitHub) {
+    if (gitHub == null || gitHub.isEmpty) {
+      return "Por favor preencha seu GitHub";
+    } else
+      return null;
+  }
+
+  String? _validarTipoSanguineo(String? tipoSanguineo) {
+    if (tipoSanguineo == null || tipoSanguineo.isEmpty) {
+      return "Por favor preencha seu tipo sanguíneo";
     } else
       return null;
   }
@@ -250,15 +304,15 @@ class TelaAdicionarPessoas extends StatelessWidget {
   }
 
   _sendForm(BuildContext context) {
-    // TipoSanguineo tipoDeSangue =
-    //     parseTipoSanguineo(tipoSanguineoController.text);
+    TipoSanguineo tipoDeSangue =
+        parseTipoSanguineo(tipoSanguineoController.text);
     if (_formKey.currentState!.validate()) {
       final novaPessoa = Pessoa(
         nome: nomeController.text,
         email: emailController.text,
-        // telefone: telefoneController.text,
-        // github: githubController.text,
-        // tipoSanguineo: tipoDeSangue,
+        telefone: telefoneController.text,
+        github: githubController.text,
+        tipoSanguineo: tipoDeSangue,
       );
       Provider.of<EstadoListaDePessoas>(context, listen: false)
           .incluir(novaPessoa);
@@ -269,8 +323,8 @@ class TelaAdicionarPessoas extends StatelessWidget {
   void _limparCampos() {
     nomeController.clear();
     emailController.clear();
-    // telefoneController.clear();
-    // githubController.clear();
-    // tipoSanguineoController.clear();
+    telefoneController.clear();
+    githubController.clear();
+    tipoSanguineoController.clear();
   }
 }

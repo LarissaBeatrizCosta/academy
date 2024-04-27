@@ -144,12 +144,17 @@ class TelaListaDePessoas extends StatelessWidget {
                     Text(pessoa.email),
                     Text(pessoa.telefone),
                     Text(pessoa.github),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        estadoLista.excluir(pessoa);
+                      },
+                    ),
                   ],
                 ),
                 trailing: CircleAvatar(
                   backgroundColor: escolherCor(pessoa.tipoSanguineo),
                 ),
-                onTap: () => print("IMPLEMENTAR"),
               );
             },
           );
@@ -319,6 +324,7 @@ class TelaAdicionarPessoas extends StatelessWidget {
       _limparCampos();
     }
   }
+
 
   void _limparCampos() {
     nomeController.clear();

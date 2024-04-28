@@ -92,7 +92,12 @@ class EstadoListaDePessoas with ChangeNotifier {
     notifyListeners();
   }
 
-// todo: implementar métodos restantes
+// implementar métodos restantes
+
+  void editar(int, index, Pessoa pessoa) {
+    _listaDePessoas[index] = pessoa;
+    notifyListeners();
+  }
 }
 
 class TelaInicial extends StatelessWidget {
@@ -144,6 +149,12 @@ class TelaListaDePessoas extends StatelessWidget {
                     Text(pessoa.email),
                     Text(pessoa.telefone),
                     Text(pessoa.github),
+                    TextButton(
+                      onPressed: () {
+                        // estadoLista.editar(pessoa);
+                      },
+                      child: Text("Editar"),
+                    ),
                     IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
@@ -325,7 +336,6 @@ class TelaAdicionarPessoas extends StatelessWidget {
     }
   }
 
-
   void _limparCampos() {
     nomeController.clear();
     emailController.clear();
@@ -335,4 +345,4 @@ class TelaAdicionarPessoas extends StatelessWidget {
   }
 }
 
-// todo delete, update e filtro
+// todo update e filtro

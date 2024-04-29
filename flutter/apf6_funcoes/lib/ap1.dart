@@ -13,6 +13,7 @@ void main() {
           "/": (context) => TelaInicial(),
           "/listaDePessoas": (context) => TelaListaDePessoas(),
           "/adicionarPessoas": (context) => TelaAdicionarPessoas(),
+          "/editarPessoa": (context) => TelaAdicionarPessoas(),
         },
       ),
     ),
@@ -91,10 +92,8 @@ class EstadoListaDePessoas with ChangeNotifier {
     _listaDePessoas.remove(pessoa);
     notifyListeners();
   }
-
-// implementar métodos restantes
-
-  void editar(int, index, Pessoa pessoa) {
+  
+  void editar(int index, Pessoa pessoa) {
     _listaDePessoas[index] = pessoa;
     notifyListeners();
   }
@@ -150,9 +149,12 @@ class TelaListaDePessoas extends StatelessWidget {
                     Text(pessoa.telefone),
                     Text(pessoa.github),
                     TextButton(
-                      onPressed: () {
-                        // estadoLista.editar(pessoa);
-                      },
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TelaAdicionarPessoas(pessoa: pessoa),
+                        ),
+                      ),
                       child: Text("Editar"),
                     ),
                     IconButton(
@@ -203,6 +205,9 @@ class TelaAdicionarPessoas extends StatelessWidget {
   final TextEditingController telefoneController = TextEditingController();
   final TextEditingController githubController = TextEditingController();
   final TextEditingController tipoSanguineoController = TextEditingController();
+  final Pessoa? pessoa;
+
+  TelaAdicionarPessoas({this.pessoa});
 
   @override
   Widget build(BuildContext context) {
@@ -320,8 +325,7 @@ class TelaAdicionarPessoas extends StatelessWidget {
   }
 
   _sendForm(BuildContext context) {
-    TipoSanguineo tipoDeSangue =
-        parseTipoSanguineo(tipoSanguineoController.text);
+    TipoSanguineo tipoDeSangue = parseTipoSanguineo(tipoSanguineoController.text);
     if (_formKey.currentState!.validate()) {
       final novaPessoa = Pessoa(
         nome: nomeController.text,
@@ -330,8 +334,16 @@ class TelaAdicionarPessoas extends StatelessWidget {
         github: githubController.text,
         tipoSanguineo: tipoDeSangue,
       );
-      Provider.of<EstadoListaDePessoas>(context, listen: false)
-          .incluir(novaPessoa);
+
+      final estadoLista = Provider.of<EstadoListaDePessoas>(context, listen: false);
+
+      if (pessoa != null) {
+        final index = estadoLista.pessoas.indexOf(pessoa!);
+        estadoLista.editar(index, novaPessoa);
+      } else {
+        estadoLista.incluir(novaPessoa);
+      }
+
       _limparCampos();
     }
   }
@@ -345,4 +357,4 @@ class TelaAdicionarPessoas extends StatelessWidget {
   }
 }
 
-// todo update e filtro
+// todo filtro

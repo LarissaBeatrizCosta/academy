@@ -76,12 +76,69 @@ class EstadoListaDePessoas with ChangeNotifier {
       nome: "Brenda",
       email: "brenda@example.com",
       telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.aPositivo,
+      github: "meuGit",
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.aNegativo,
+      github: "meuGit",
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.bPositivo,
+      github: "meuGit",
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.bNegativo,
+      github: "meuGit",
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "47 988941788",
       tipoSanguineo: TipoSanguineo.abPositivo,
+      github: "meuGit",
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.abNegativo,
+      github: "meuGit",
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.oPositivo,
+      github: "meuGit",
+    ),
+    Pessoa(
+      nome: "Brenda",
+      email: "brenda@example.com",
+      telefone: "47 988941788",
+      tipoSanguineo: TipoSanguineo.oNegativo,
       github: "meuGit",
     ),
   ];
 
   List<Pessoa> get pessoas => List.unmodifiable(_listaDePessoas);
+  TipoSanguineo? _selecionarTipo;
+
+  TipoSanguineo? get selecionarTipo => _selecionarTipo;
+
+  void selecionarTipoSanguineo(TipoSanguineo? tipo) {
+    _selecionarTipo = tipo;
+    notifyListeners();
+  }
 
   void incluir(Pessoa pessoa) {
     _listaDePessoas.add(pessoa);
@@ -92,7 +149,7 @@ class EstadoListaDePessoas with ChangeNotifier {
     _listaDePessoas.remove(pessoa);
     notifyListeners();
   }
-  
+
   void editar(int index, Pessoa pessoa) {
     _listaDePessoas[index] = pessoa;
     notifyListeners();
@@ -133,47 +190,98 @@ class TelaListaDePessoas extends StatelessWidget {
       appBar: AppBar(
         title: Text("Lista de Pessoas"),
       ),
-      body: Consumer<EstadoListaDePessoas>(
-        builder: (context, estadoLista, _) {
-          final pessoas = estadoLista.pessoas;
-          return ListView.builder(
-            itemCount: pessoas.length,
-            itemBuilder: (context, index) {
-              final pessoa = pessoas[index];
-              return ListTile(
-                title: Text(pessoa.nome),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(pessoa.email),
-                    Text(pessoa.telefone),
-                    Text(pessoa.github),
-                    TextButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TelaAdicionarPessoas(pessoa: pessoa),
+      body: Column(
+        children: [
+          filtroDrop(context),
+          SizedBox(height: 10),
+          Expanded(
+            child: Consumer<EstadoListaDePessoas>(
+              builder: (context, estadoLista, _) {
+                final pessoas = filtrarPorTipoSanguineo(
+                    estadoLista.pessoas, estadoLista.selecionarTipo);
+                return ListView.builder(
+                  itemCount: pessoas.length,
+                  itemBuilder: (context, index) {
+                    final pessoa = pessoas[index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          title: Text(pessoa.nome),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(pessoa.email),
+                              Text(pessoa.telefone),
+                              Text(pessoa.github),
+                            ],
+                          ),
+                          trailing: CircleAvatar(
+                            backgroundColor: escolherCor(pessoa.tipoSanguineo),
+                          ),
                         ),
-                      ),
-                      child: Text("Editar"),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        estadoLista.excluir(pessoa);
-                      },
-                    ),
-                  ],
-                ),
-                trailing: CircleAvatar(
-                  backgroundColor: escolherCor(pessoa.tipoSanguineo),
-                ),
-              );
-            },
-          );
-        },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      TelaAdicionarPessoas(pessoa: pessoa),
+                                ),
+                              ),
+                              child: Text("Editar"),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                estadoLista.excluir(pessoa);
+                              },
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  Widget filtroDrop(BuildContext context) {
+    final estadoLista = Provider.of<EstadoListaDePessoas>(context);
+    return DropdownButtonFormField<TipoSanguineo>(
+      value: estadoLista.selecionarTipo,
+      onChanged: (value) {
+        estadoLista.selecionarTipoSanguineo(value!);
+      },
+      items: TipoSanguineo.values.map((tipo) {
+        return DropdownMenuItem<TipoSanguineo>(
+          value: tipo,
+          child:
+              Text(tipo.toString().substring(tipo.toString().indexOf('.') + 1)),
+        );
+      }).toList(),
+      decoration: InputDecoration(
+        labelText: "Selecione o tipo do sangue:",
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
+
+  List<Pessoa> filtrarPorTipoSanguineo(
+      List<Pessoa> pessoas, TipoSanguineo? tipo) {
+    if (tipo == null) {
+      return pessoas;
+    } else {
+      return pessoas.where((pessoa) => pessoa.tipoSanguineo == tipo).toList();
+    }
   }
 }
 
@@ -211,9 +319,10 @@ class TelaAdicionarPessoas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String titulo = pessoa == null ? "Adicionar Pessoa" : "Editar Pessoa";
     return Scaffold(
         appBar: AppBar(
-          title: Text("Adicionar Pessoas"),
+          title: Text(titulo),
         ),
         body: Padding(
           padding: EdgeInsets.all(20),
@@ -325,7 +434,8 @@ class TelaAdicionarPessoas extends StatelessWidget {
   }
 
   _sendForm(BuildContext context) {
-    TipoSanguineo tipoDeSangue = parseTipoSanguineo(tipoSanguineoController.text);
+    TipoSanguineo tipoDeSangue =
+        parseTipoSanguineo(tipoSanguineoController.text);
     if (_formKey.currentState!.validate()) {
       final novaPessoa = Pessoa(
         nome: nomeController.text,
@@ -335,7 +445,8 @@ class TelaAdicionarPessoas extends StatelessWidget {
         tipoSanguineo: tipoDeSangue,
       );
 
-      final estadoLista = Provider.of<EstadoListaDePessoas>(context, listen: false);
+      final estadoLista =
+          Provider.of<EstadoListaDePessoas>(context, listen: false);
 
       if (pessoa != null) {
         final index = estadoLista.pessoas.indexOf(pessoa!);
@@ -356,5 +467,3 @@ class TelaAdicionarPessoas extends StatelessWidget {
     tipoSanguineoController.clear();
   }
 }
-
-// todo filtro

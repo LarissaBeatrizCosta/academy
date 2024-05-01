@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import '../ap1_formulas/ap3.dart';
 

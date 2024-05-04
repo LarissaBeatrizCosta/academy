@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 void main() {
   imprimirMatrizEscolhida();
@@ -48,7 +47,6 @@ int pegarValoresEscolhidos(int linha, int coluna) {
 
 List<List<int>> gerarMatrizEscolhida() {
   List<int> tamanhos = pegarTamanhoMatriz();
-  int contadorLinha = 0;
   int tamanhoLinha = tamanhos[0];
   int tamanhoColuna = tamanhos[1];
   List<List<int>> matrizEscolhida = [];
@@ -59,10 +57,8 @@ List<List<int>> gerarMatrizEscolhida() {
       tamanhoColuna != 0) {
     try {
       for (int indice = 0; indice < tamanhoLinha; indice++) {
-        List<int> novaColuna = List.generate(
-            tamanhoLinha, (index) => pegarValoresEscolhidos(indice, index));
+        List<int> novaColuna = List.generate(tamanhoLinha, (index) => pegarValoresEscolhidos(indice, index));
         matrizEscolhida.add(novaColuna);
-        contadorLinha++;
       }
     } catch (e) {
       print("Inválidos");

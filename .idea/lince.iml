@@ -27,6 +27,12 @@
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf6_funcoes/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf6_funcoes/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/flutter/apf6_funcoes/build" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacao/ap1_provider/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacao/ap1_provider/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacao/ap1_provider/build" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap1_provider/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap1_provider/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap1_provider/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

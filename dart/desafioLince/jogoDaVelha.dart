@@ -1,5 +1,6 @@
 import 'dart:io';
 
+//todo terminar
 void main() {
   List<String> posicaoTabuleiro = EscolherPosicao();
   JogarVelha(posicaoTabuleiro);

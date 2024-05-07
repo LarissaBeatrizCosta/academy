@@ -26,9 +26,6 @@ class FilmeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool verificarFavorito(FilmeModel filme) {
-    return _filmes.contains(filme);
-  }
 
   int get filmesTotais => _filmes.length;
 }

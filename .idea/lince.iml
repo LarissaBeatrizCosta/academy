@@ -36,6 +36,9 @@
       <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap2_provider/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap2_provider/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap2_provider/build" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap3_provider/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap3_provider/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/exerciciosFixacaoFlutter/ap3_provider/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

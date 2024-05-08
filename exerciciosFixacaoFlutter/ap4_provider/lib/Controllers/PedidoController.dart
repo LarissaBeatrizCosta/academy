@@ -16,6 +16,14 @@ class PedidoController extends ChangeNotifier {
     notifyListeners();
   }
 
+  double calcularTotalPedido(PedidoModel pedido){
+    double contador = 0;
+    for(var produto in pedido.produtos){
+      contador += produto.preco * produto.quantidade;
+    }
+    return contador;
+  }
+
 
   int get totalPedidos => _pedidos.length;
 }

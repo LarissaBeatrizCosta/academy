@@ -12,7 +12,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text(
+          child: Text(  
             "Praticando Provider 2",
             style: TextStyle(
               color: Colors.white,

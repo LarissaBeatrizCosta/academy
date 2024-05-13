@@ -1,3 +1,4 @@
+import 'package:ap2_provider/Models/TarefaModel.dart';
 import "package:path/path.dart";
 import 'package:sqflite/sqflite.dart';
 
@@ -27,4 +28,23 @@ class TabelaTarefa {
   static const String tableName = "tarefa";
   static const String id = "id";
   static const String name = "name";
+  static Map<String, dynamic> toMap(TarefaModel tarefa) {
+    final map = <String, dynamic>{};
+
+    map[TabelaTarefa.id]= tarefa.id;
+    map[TabelaTarefa.tableName] = tarefa.nome;
+
+    return map;
+  }
+}
+
+class TarefaController{
+  Future<void> insert(TarefaModel tarefa) async{
+    final dataBase = await getDatabase();
+    final map = TabelaTarefa.toMap(tarefa);
+
+    await dataBase.insert(TabelaTarefa.tableName, map);
+
+    return;
+  }
 }

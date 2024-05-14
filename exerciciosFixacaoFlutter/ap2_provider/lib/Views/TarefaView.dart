@@ -17,10 +17,15 @@ class TarefaView extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
           IconButton(onPressed: () {
-            tarefaController.removerTarefas(tarefa);
-          }, icon: Icon(Icons.delete)),
+            Navigator.pushNamed(context, "/CadastroTarefas");
+          }, icon: Icon(Icons.add)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+          IconButton(
+              onPressed: () {
+                tarefaController.removerTarefas(tarefa);
+              },
+              icon: Icon(Icons.delete)),
         ],
       ),
     );

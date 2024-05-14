@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontFamily: "Mukta-Bold",
-              fontSize: 15,
+              fontSize: 16,
             ),
           ),
         ),

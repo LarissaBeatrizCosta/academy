@@ -1,3 +1,4 @@
+import 'package:ap2_provider/Views/formTarefa.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +9,14 @@ class Routes {
     switch (rotas.name) {
       case "/":
         return MaterialPageRoute(builder: (_) => HomeView());
+
+      case "/CadastroTarefas":
+        return MaterialPageRoute(builder: (_) => FormCadastro());
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            body:  Text("Pagina não encontrada!"),
+            body: Text("Pagina não encontrada!"),
           ),
         );
     }

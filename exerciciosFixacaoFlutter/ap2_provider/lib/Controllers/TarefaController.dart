@@ -10,8 +10,8 @@ class TarefaController extends ChangeNotifier {
 
   List<TarefaModel> get tarefas => _tarefas;
 
-  void adicionarTarefa(TarefaModel tarefa) {
-    _tarefas.add(tarefa);
+  Future<void> insert() async{
+    final tarefa = TarefaModel(nome: , id: id);
     notifyListeners();
   }
 

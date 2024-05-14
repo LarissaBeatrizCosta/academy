@@ -38,7 +38,7 @@ class TabelaTarefa {
   }
 }
 
-class TarefaController{
+class TarefaControllerDb{
   Future<void> insert(TarefaModel tarefa) async{
     final dataBase = await getDatabase();
     final map = TabelaTarefa.toMap(tarefa);

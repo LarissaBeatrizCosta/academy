@@ -1,13 +1,12 @@
-import 'package:ap2_provider/Controllers/TarefaController.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'TarefaView.dart';
+import 'formTarefa.dart';
 
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final tarefaController = Provider.of<TarefaController>(context);
+    final tarefaController = Provider.of<TarefaState>(context);
 
     return Scaffold(
       appBar: AppBar(

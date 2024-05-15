@@ -28,6 +28,7 @@ class TabelaTarefa {
   static const String tableName = "tarefa";
   static const String id = "id";
   static const String name = "name";
+
   static Map<String, dynamic> toMap(TarefaModel tarefa) {
     final map = <String, dynamic>{};
 
@@ -38,7 +39,7 @@ class TabelaTarefa {
   }
 }
 
-class TarefaControllerDb{
+class TarefaController{
   Future<void> insert(TarefaModel tarefa) async{
     final dataBase = await getDatabase();
     final map = TabelaTarefa.toMap(tarefa);

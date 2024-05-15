@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 
-class TarefaModel extends ChangeNotifier {
-  int id;
+class TarefaModel{
+  int? id;
   String nome;
-  bool conclusao;
 
-  TarefaModel({required this.nome, required this.id, required this.conclusao});
+  TarefaModel({this.id, required this.nome});
 }

@@ -1,16 +1,13 @@
-import 'package:ap2_provider/Controllers/TarefaController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:flutter/cupertino.dart';
-
 import 'Routes/Routes.dart';
 import 'Views/HomeView.dart';
+import 'Views/formTarefa.dart';
 
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (context) => TarefaController(),
+      create: (context) => TarefaState(),
       child: MyApp(),
     ),
   );

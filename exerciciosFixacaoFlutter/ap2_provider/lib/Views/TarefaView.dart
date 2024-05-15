@@ -1,8 +1,7 @@
 import 'package:ap2_provider/Models/TarefaModel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Controllers/TarefaController.dart';
+import 'formTarefa.dart';
 
 class TarefaView extends StatelessWidget {
   final TarefaModel tarefa;
@@ -11,7 +10,7 @@ class TarefaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tarefaController = Provider.of<TarefaController>(context);
+    final tarefaController = Provider.of<TarefaState>(context);
     return ListTile(
       title: Text(tarefa.nome),
       trailing: Row(

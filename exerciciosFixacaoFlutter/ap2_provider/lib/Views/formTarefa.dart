@@ -4,53 +4,30 @@ import 'package:provider/provider.dart';
 import '../Models/TarefaModel.dart';
 
 class TarefaState extends ChangeNotifier {
-  List<TarefaModel> _tarefas = [
-    TarefaModel(
-      nome: "Tarefa 1",
-      id: 1,
-    ),
-    TarefaModel(
-      nome: "Tarefa 2",
-      id: 2,
-    ),
-    TarefaModel(
-      nome: "Tarefa 3",
-      id: 3,
-    ),
-  ];
-
   final controller = TarefaController();
   final _controllerNome = TextEditingController();
+  final List<TarefaModel> _tarefas = [];
 
-  TextEditingController get controllerNome => _controllerNome;
-
+  TextEditingController get controllerName => _controllerNome;
   List<TarefaModel> get tarefas => _tarefas;
 
   Future<void> insert() async {
     final tarefa = TarefaModel(
-      nome: controllerNome.text,
+      nome: controllerName.text,
     );
-
     await controller.insert(tarefa);
-    controllerNome.clear();
+    _tarefas.add(tarefa);
+
+    controllerName.clear();
     notifyListeners();
   }
-
-  void removerTarefas(TarefaModel tarefa) {
-    _tarefas.remove(tarefa);
-    notifyListeners();
-  }
-
-  int get todasTarefas => _tarefas.length;
 }
 
 class FormCadastro extends StatelessWidget {
+  const FormCadastro({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final tarefaController = Provider.of<TarefaState>(context);
-    final _form = GlobalKey<FormState>();
-    final _valor = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -68,33 +45,48 @@ class FormCadastro extends StatelessWidget {
         child: Column(
           children: [
             Form(
-              key: _form,
               child: TextFormField(
-                controller: _valor,
-                style: TextStyle(fontFamily: "Mukta-Bold"),
-                decoration: InputDecoration(
-                  labelText: "Nome Da Tarefa",
+                controller: Provider.of<TarefaState>(context, listen: false).controllerName,
+                decoration: const InputDecoration(
+                  hintText: "Nova tarefa",
                 ),
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Informe o nome da tarefa !";
+                  if ((value ?? "").isEmpty) {
+                    return "Preencha o nome da tarefa";
                   }
                   return null;
                 },
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: ElevatedButton(
-                onPressed: () async {
-                  await tarefaController.insert();
-                },
-                child: Text("Cadastrar"),
-              ),
-            ),
+            const _ActionButton(),
           ],
         ),
       ),
     );
   }
 }
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Provider.of<TarefaState>(context);
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              await state.insert();
+            },
+            child: Text("Cadastrar"),
+          )
+        ],
+      ),
+    );
+  }
+}
+

@@ -33,7 +33,7 @@ class TabelaTarefa {
     final map = <String, dynamic>{};
 
     map[TabelaTarefa.id]= tarefa.id;
-    map[TabelaTarefa.tableName] = tarefa.nome;
+    map[TabelaTarefa.name] = tarefa.nome;
 
     return map;
   }

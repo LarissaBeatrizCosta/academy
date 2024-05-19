@@ -21,6 +21,12 @@ class TarefaState extends ChangeNotifier {
     controllerName.clear();
     notifyListeners();
   }
+
+  Future<void> delete(TarefaModel tarefa) async{
+    await controller.delete(tarefa);
+    _tarefas.removeWhere((tarefaExcluida) => tarefaExcluida.id == tarefa.id);
+    notifyListeners();
+  }
 }
 
 class FormCadastro extends StatelessWidget {

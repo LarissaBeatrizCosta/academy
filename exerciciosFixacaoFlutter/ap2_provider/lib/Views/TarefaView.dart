@@ -16,7 +16,9 @@ class TarefaView extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+          IconButton(onPressed: () {
+            tarefaController.delete(tarefa);
+          }, icon: Icon(Icons.delete)),
         ],
       ),
     );

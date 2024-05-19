@@ -32,20 +32,29 @@ class TabelaTarefa {
   static Map<String, dynamic> toMap(TarefaModel tarefa) {
     final map = <String, dynamic>{};
 
-    map[TabelaTarefa.id]= tarefa.id;
+    map[TabelaTarefa.id] = tarefa.id;
     map[TabelaTarefa.name] = tarefa.nome;
 
     return map;
   }
 }
 
-class TarefaController{
-  Future<void> insert(TarefaModel tarefa) async{
+class TarefaController {
+  Future<void> insert(TarefaModel tarefa) async {
     final dataBase = await getDatabase();
     final map = TabelaTarefa.toMap(tarefa);
 
     await dataBase.insert(TabelaTarefa.tableName, map);
 
-    return;
+  }
+
+  Future<void> delete(TarefaModel tarefa) async {
+    final dataBase = await getDatabase();
+
+    await dataBase.delete(
+      TabelaTarefa.tableName,
+      where: "${TabelaTarefa.id} = ? ",
+      whereArgs: [tarefa.id],
+    );
   }
 }

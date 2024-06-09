@@ -22,5 +22,4 @@ O curso está dividido nos seguintes módulos:
 3. **Persistência de Dados**
    - 💾 Armazenamento local com SharedPreferences
    - 🗄️ Banco de dados com SQLite
-   - ☁️ Armazenamento em nuvem
 
